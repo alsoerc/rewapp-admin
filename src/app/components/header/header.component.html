@@ -1,1 +1,10 @@
-<p>header works!</p>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Rewapp</span>
+      <a mat-button [routerLink]="'/accounts'"> Empresa</a>
+      <a mat-button [routerLink]="'/create-account'">Empleados</a>
+      <a mat-button [routerLink]="'/contacts'"> Recompensas</a>
+      <a mat-button [routerLink]="'/create-contact'">Encuestas</a>
+  </mat-toolbar-row>
+
+</mat-toolbar>
