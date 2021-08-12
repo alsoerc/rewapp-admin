@@ -31,7 +31,7 @@ export class CompanyService {
   }
 
   getOneRecord(id : number){
-    return this.service.get(this.url + 'companies/' + id );
+    return this.service.get<Company>(this.url + 'companies/' + id );
   }
 
 

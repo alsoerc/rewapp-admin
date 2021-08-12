@@ -30,4 +30,9 @@ export class DirectionService {
     return this.service.delete(this.url + 'directions/' + id);
   }
 
+  getOneRecord(id:number){
+    return this.service.get<Direction>(this.url + 'directions/' + id);
+  }
+
+
 }
