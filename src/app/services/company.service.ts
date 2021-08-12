@@ -30,5 +30,9 @@ export class CompanyService {
     return this.service.delete(this.url + 'companies/' + id);
   }
 
+  getOneRecord(id : number){
+    return this.service.get(this.url + 'companies/' + id );
+  }
+
 
 }
