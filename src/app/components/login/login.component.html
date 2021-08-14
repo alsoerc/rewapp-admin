@@ -13,17 +13,19 @@
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>Correo electrónico</mat-label>
               <input matInput formControlName="email">
+              <mat-icon matSuffix>mail</mat-icon>
             </mat-form-field>
 
             <mat-form-field class="example-full-width" appearance="fill">
               <mat-label>Contraseña</mat-label>
-              <input matInput formControlName="password">
+              <input matInput formControlName="password" type="password">
+              <mat-icon matSuffix>password</mat-icon>
             </mat-form-field>
 
             <table class="example-full-width" cellspacing="0">
               <td>
                 <button class="example-full-width" mat-raised-button color="primary" type="submit"
-                  [disabled]="loginForm.invalid" (click)="saveData()">Entrar</button>
+                  [disabled]="loginForm.invalid" (click)="login()">Entrar</button>
               </td>
               <td>
                 <button class="example-full-width" mat-raised-button color="warn" (click)="cancel()">Cancelar</button>
@@ -40,72 +42,92 @@
       <mat-icon class="example-tab-icon">account_circle</mat-icon>
       Registrarse
     </ng-template>
-    <div class="main-div">
+    <div class="main-div-2">
       <mat-card>
 
         <mat-card-content class="example-full-width">
-          <mat-vertical-stepper>
-              <mat-step [stepControl]="firstFormGroup">
-                <form [formGroup]="firstFormGroup">
-                  <ng-template matStepLabel>Fill out your name</ng-template>
-                  <mat-form-field appearance="fill">
-                    <mat-label>Name</mat-label>
-                    <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+          <mat-vertical-stepper #stepper>
+
+              <mat-step [stepControl]="companyForm" errorMessage="Completa todos los campos">
+                <form [formGroup]="companyForm">
+                  <ng-template matStepLabel>Ingresa información de tu empresa</ng-template>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Nombre de la empresa" formControlName="companyName" required>
                   </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Giro</mat-label>
+                    <input matInput placeholder="Giro de la empresa" formControlName="description" required>
+                  </mat-form-field>
+
+
                   <div>
-                    <button mat-button matStepperNext>Next</button>
+                    <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
                   </div>
                 </form>
               </mat-step>
-              <mat-step [stepControl]="secondFormGroup">
-                <form [formGroup]="secondFormGroup">
-                  <ng-template matStepLabel>Fill out your address</ng-template>
-                  <mat-form-field appearance="fill">
-                    <mat-label>Address</mat-label>
-                    <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+
+              <mat-step [stepControl]="userForm" errorMessage="Completa todos los campos">
+                <form [formGroup]="userForm">
+                  <ng-template matStepLabel>Registra a un administrador</ng-template>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Nombre del administrador" formControlName="name" required>
                   </mat-form-field>
+
+                  <table class="example-full-width" cellspacing="0" >
+                    <td>
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Apellido paterno</mat-label>
+                        <input matInput placeholder="Nombre del administrador" formControlName="lastName1" required>
+                      </mat-form-field>
+                    </td>
+                    <td>
+                      <mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Apellido materno</mat-label>
+                        <input matInput placeholder="Nombre del administrador" formControlName="lastName2" required>
+                      </mat-form-field>
+                    </td>
+                  </table>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Año de nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="bornDate" readonly >
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Correo electrónico</mat-label>
+                    <input matInput placeholder="hola@ejemplo.com" formControlName="adminEmail" required>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width" appearance="fill">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput formControlName="adminPassword" type="password" required>
+                  </mat-form-field>
+
                   <div>
-                    <button mat-button matStepperPrevious>Back</button>
-                    <button mat-button matStepperNext>Next</button>
+                    <button mat-raised-button color="accent" matStepperPrevious>Anterior</button>
+                    <button mat-raised-button color="primary" matStepperNext>Siguiente</button>
                   </div>
                 </form>
               </mat-step>
+
+
               <mat-step>
-                <ng-template matStepLabel>Done</ng-template>
-                <p>You are now done.</p>
+                <ng-template matStepLabel>Terminado</ng-template>
+                <p *ngIf="!userForm.valid || !companyForm.valid">Completa todos los campos para continuar</p>
                 <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button (click)="stepper.reset()">Reset</button>
+                  <button mat-raised-button color="accent" matStepperPrevious>Anterior</button>
+                  <button mat-raised-button color="primary" (click)="saveData()" [disabled]="userForm.invalid || companyForm.invalid">Registrarme</button>
                 </div>
               </mat-step>
             </mat-vertical-stepper>
 
-
-
-          <!--<form [formGroup]="registerForm">
-
-
-
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Correo electrónico</mat-label>
-              <input matInput formControlName="email">
-            </mat-form-field>
-
-            <mat-form-field class="example-full-width" appearance="fill">
-              <mat-label>Contraseña</mat-label>
-              <input matInput formControlName="password">
-            </mat-form-field>
-
-            <table class="example-full-width" cellspacing="0">
-              <td>
-                <button class="example-full-width" mat-raised-button color="primary" type="submit"
-                  [disabled]="registerForm.invalid" (click)="saveData()">Entrar</button>
-              </td>
-              <td>
-                <button class="example-full-width" mat-raised-button color="warn" (click)="cancel()">Cancelar</button>
-              </td>
-            </table>
-          </form>-->
         </mat-card-content>
       </mat-card>
     </div>

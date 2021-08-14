@@ -52,23 +52,10 @@ export class EmployeesComponent implements OnInit {
     this.employee.lastName2 = this.employeeForm.value.lastName2;
     this.employee.email = this.employeeForm.value.email;
     this.employee.password = this.employeeForm.value.password;
+    this.employee.bornDate = this.generateBornDate();
 
 
-    if(this.employeeForm.value.bornDate._i.date < 10){
-      this.day = '0' + this.employeeForm.value.bornDate._i.date;
-    }else{
-      this.day = this.employeeForm.value.bornDate._i.date;
-    }
 
-    if( (this.employeeForm.value.bornDate._i.month + 1) < 10){
-      this.month = '0' + (this.employeeForm.value.bornDate._i.month + 1);
-    }else{
-      this.month = (this.employeeForm.value.bornDate._i.month + 1);
-    }
-
-    this.employee.bornDate = this.day + '-' + this.month + '-' +this.employeeForm.value.bornDate._i.year ;
-
-    //console.log(this.employee.bornDate);
 
     this.employeeService.postRecord(this.employee).subscribe(
       (success) =>{
@@ -82,6 +69,22 @@ export class EmployeesComponent implements OnInit {
     )
 
 
+  }
+
+  generateBornDate(){
+    if(this.employeeForm.value.bornDate._i.date < 10){
+      this.day = '0' + this.employeeForm.value.bornDate._i.date;
+    }else{
+      this.day = this.employeeForm.value.bornDate._i.date;
+    }
+
+    if( (this.employeeForm.value.bornDate._i.month + 1) < 10){
+      this.month = '0' + (this.employeeForm.value.bornDate._i.month + 1);
+    }else{
+      this.month = (this.employeeForm.value.bornDate._i.month + 1);
+    }
+
+    return this.day + '-' + this.month + '-' +this.employeeForm.value.bornDate._i.year ;
   }
 
   cancel(){
