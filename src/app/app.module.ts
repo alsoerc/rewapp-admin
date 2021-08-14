@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule} from "@angular/common/http";
+import { CUSTOM_ELEMENTS_SCHEMA }      from '@angular/core';
 
 import { HeaderComponent } from './components/header/header.component';
 import { CompanyComponent } from './components/company/company.component';
@@ -26,7 +27,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MomentDateModule } from '@angular/material-moment-adapter';
-
+import { LoginComponent } from './components/login/login.component';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
     RewardsComponent,
     EmployeesComponent,
     QuizComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,10 +60,13 @@ import { MomentDateModule } from '@angular/material-moment-adapter';
     MatCardModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    MomentDateModule
+    MomentDateModule,
+    MatStepperModule,
+
 
   ],
   providers: [MatDatepickerModule,],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

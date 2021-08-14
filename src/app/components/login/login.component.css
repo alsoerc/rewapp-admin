@@ -1,0 +1,25 @@
+.main-div{
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.example-full-width {
+  width: 100%;
+}
+.example-tab-icon {
+  margin-right: 8px;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.mat-stepper-vertical {
+  margin-top: 8px;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
