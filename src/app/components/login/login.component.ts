@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
   date = '';
   day='';
   month = '';
+  isLoading = false;
 
 
   company = new Company();
@@ -104,15 +105,13 @@ export class LoginComponent implements OnInit {
 
 
 
-  cancel(){
-    this.loginForm.reset();
-  }
+
 
 
   registerCompany(){
     this.company.name = this.companyForm.value.companyName;
     this.company.description = this.companyForm.value.description;
-    console.log(this.company);
+    this.isLoading = true;
   }
 
   registerAdmin(){
@@ -123,7 +122,6 @@ export class LoginComponent implements OnInit {
     this.admin.bornDate = this.generateBornDate();
     this.admin.email = this.userForm.value.adminEmail;
     this.admin.password = this.userForm.value.adminPassword;
-    console.log(this.admin);
   }
 
   generateBornDate(){
@@ -155,16 +153,33 @@ export class LoginComponent implements OnInit {
         this.adminService.postRecord(this.admin).subscribe(
           (success) =>{
             console.log(success);
-
+            this.cancel();
+            this.isLoading = false;
           },
           (err) =>{
             console.log(err);
-
           }
         )
-
       },
       (err) =>{
+        console.log(err);
+      }
+    )
+
+  }
+
+  login(){
+    console.log('hi');
+
+    this.admin.email = this.loginForm.value.email;
+    this.admin.password = this.loginForm.value.password;
+
+    this.adminService.validateCredentials(this.admin).subscribe(
+      (success)=>{
+        console.log(success);
+
+      },
+      (err)=>{
         console.log(err);
 
       }
@@ -172,8 +187,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  login(){
-
+  cancel(){
+    this.loginForm.reset();
   }
 
 }
