@@ -1,3 +1,4 @@
+import { MatPaginatorIntlEsp } from './utils/MatPaginatorTranslater';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +30,10 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { LoginComponent } from './components/login/login.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -62,10 +67,14 @@ import {MatStepperModule} from '@angular/material/stepper';
     MatProgressBarModule,
     MomentDateModule,
     MatStepperModule,
-
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatSnackBarModule
 
   ],
-  providers: [MatDatepickerModule,],
+  providers: [MatDatepickerModule,
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlEsp}],
   bootstrap: [AppComponent],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
