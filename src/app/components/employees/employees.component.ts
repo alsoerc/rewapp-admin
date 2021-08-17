@@ -32,7 +32,7 @@ export const MY_DATE_FORMATS = {
 export class EmployeesComponent implements OnInit {
 
   //Set up mat table
-  displayedColumns2: String[] = ['id', 'name', 'lastName1', 'lastName2', 'email', 'wapps', 'id2', 'id3'];
+  displayedColumns2: String[] = ['id', 'name', 'lastName1', 'lastName2', 'email', 'userType', 'wapps', 'id2', 'id3'];
   dataSource2: any;
   //Set up mat paginator and mat sort
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
@@ -77,7 +77,7 @@ export class EmployeesComponent implements OnInit {
 
   saveData(){
     this.isLoading=true;
-    this.employee.idCompany = 2;
+    this.employee.idCompany = this.idCompany;
     this.employee.name = this.employeeForm.value.name;
     this.employee.lastName1 = this.employeeForm.value.lastName1;
     this.employee.lastName2 = this.employeeForm.value.lastName2;
@@ -95,6 +95,8 @@ export class EmployeesComponent implements OnInit {
       },
       (err) =>{
         console.log(err);
+        this.openSnackBar(err.error);
+        console.log(err.error);
       }
     )
 
@@ -146,6 +148,9 @@ export class EmployeesComponent implements OnInit {
       password: new FormControl('', [
         Validators.required
       ]),
+      password2: new FormControl('', [
+        Validators.required
+      ])
     });
   }
 

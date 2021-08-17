@@ -31,7 +31,7 @@ private url : string;
   }
 
   validateCredentials(employee : Employee){
-    return this.service.post<Employee>(this.url + 'users/login', employee);
+    return this.service.post<Employee>(this.url + 'users/loginAdmin', employee);
   }
 
   recoverPassword(employee:Employee){

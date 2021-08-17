@@ -1,3 +1,4 @@
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { EmployeeService } from './../../services/employee.service';
 import { CompanyService } from './../../services/company.service';
 import { Employee } from './../../models/Employee';
@@ -44,7 +45,8 @@ export class LoginComponent implements OnInit {
   company = new Company();
   admin = new Employee();
 
-  constructor(private companyService: CompanyService, private adminService: EmployeeService) { }
+  constructor(private companyService: CompanyService, private adminService: EmployeeService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.createLoginForm();
@@ -103,11 +105,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
-
-
-
-
   registerCompany(){
     this.company.name = this.companyForm.value.companyName;
     this.company.description = this.companyForm.value.description;
@@ -155,9 +152,13 @@ export class LoginComponent implements OnInit {
             console.log(success);
             this.cancel();
             this.isLoading = false;
+            localStorage.setItem('idCompany', success.idCompany.toString())
+            localStorage.setItem('idAdmin', success.id.toString())
           },
           (err) =>{
             console.log(err);
+            this.openSnackBar(err.error);
+            console.log(err.error);
           }
         )
       },
@@ -182,7 +183,6 @@ export class LoginComponent implements OnInit {
       },
       (err)=>{
         console.log(err);
-
       }
     )
 
@@ -194,12 +194,18 @@ export class LoginComponent implements OnInit {
 
   viewId(){
     let idCompany = localStorage.getItem('idCompany');
-    let idEmployee = localStorage.getItem('idEmployee');
+    let idEmployee = localStorage.getItem('idAdmin');
 
     console.log("id empresa" + idCompany);
     console.log("id empleado" +idEmployee);
 
 
+  }
+
+  openSnackBar(message : string) {
+    let matConfig = new MatSnackBarConfig();
+    matConfig.duration = 5000;
+    this.snackBar.open(message,"Cerrar", matConfig)
   }
 
 }
