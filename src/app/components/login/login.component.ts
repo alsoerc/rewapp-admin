@@ -177,7 +177,8 @@ export class LoginComponent implements OnInit {
     this.adminService.validateCredentials(this.admin).subscribe(
       (success)=>{
         console.log(success);
-
+        localStorage.setItem('idCompany', success.idCompany.toString())
+        localStorage.setItem('idAdmin', success.id.toString())
       },
       (err)=>{
         console.log(err);
@@ -189,6 +190,16 @@ export class LoginComponent implements OnInit {
 
   cancel(){
     this.loginForm.reset();
+  }
+
+  viewId(){
+    let idCompany = localStorage.getItem('idCompany');
+    let idEmployee = localStorage.getItem('idEmployee');
+
+    console.log("id empresa" + idCompany);
+    console.log("id empleado" +idEmployee);
+
+
   }
 
 }

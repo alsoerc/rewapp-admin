@@ -6,7 +6,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import {MatSort} from '@angular/material/sort';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 
 
 export const MY_DATE_FORMATS = {
@@ -43,6 +43,9 @@ export class EmployeesComponent implements OnInit {
   employee = new Employee();
   isLoading = false;
 
+  idCompany = Number(localStorage.getItem("idCompany"));
+  idAdmin = Number(localStorage.getItem("idAdmin"));
+
 
   constructor( private employeeService: EmployeeService,
     private snackBar: MatSnackBar,
@@ -59,7 +62,7 @@ export class EmployeesComponent implements OnInit {
 
 
   getEmployees(){
-    this.employeeService.getRecords().subscribe(
+    this.employeeService.getRecords(this.idCompany).subscribe(
       (success) =>{
         this.dataSource2 = new MatTableDataSource<Employee>(success);
         this.dataSource2.paginator = this.paginator;
@@ -147,7 +150,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   deleteRegister(id:number, name:string){
-    if(confirm("¿Realmente desea eliminar a " + name + " de la lista de empleados?")){
+    if(confirm(`¿Realmente desea eliminar a ${name} de la lista de empleados?`)){
       this.employeeService.deleteRecord(id).subscribe(
         (success)=>{
           this.openSnackBar("Eliminado con éxito");
@@ -164,7 +167,9 @@ export class EmployeesComponent implements OnInit {
 
 
   openSnackBar(message : string) {
-    this.snackBar.open(message, "Cerrar" )
+    let matConfig = new MatSnackBarConfig();
+    matConfig.duration = 5000;
+    this.snackBar.open(message,"Cerrar", matConfig)
   }
 
 }

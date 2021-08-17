@@ -14,8 +14,8 @@ private url : string;
     this.url = Url.url;
   }
 
-  getRecords(){
-    return this.service.get<Employee[]>(this.url + 'users');
+  getRecords(idCompany:number){
+    return this.service.get<Employee[]>(this.url + 'users/getUsersByCompany/' + idCompany);
   }
 
   postRecord(employee : Employee){
