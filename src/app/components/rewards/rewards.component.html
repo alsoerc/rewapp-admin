@@ -1,1 +1,37 @@
-<p>rewards works!</p>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="Registrar una recompensa">
+    <div class="main-div">
+      <mat-card>
+        <mat-card-content>
+          <mat-card-subtitle>Publicar una recompensa</mat-card-subtitle>
+          <form [formGroup]="rewardForm">
+
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>Nombre</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="fill">
+              <mat-label>Costo (rewapps)</mat-label>
+              <input matInput formControlName="cost">
+            </mat-form-field>
+
+            <mat-label>{{fileName || "Selecciona una imagen para continuar"}}</mat-label>
+            <input type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload formControlName="image">
+            <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+            <br>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+            <button class="full-width" mat-raised-button color="primary" [disabled]="rewardForm.invalid"
+              (click)="saveReward()">Guardar</button>
+
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-tab>
+  <mat-tab label="Lista de recompensas">
+    hola
+  </mat-tab>

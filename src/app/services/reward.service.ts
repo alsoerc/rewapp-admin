@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Reward } from './../models/Reward';
 import { Url } from './../utils/url';
 import { HttpClient } from '@angular/common/http';
@@ -33,6 +34,11 @@ export class RewardService {
   updateRecord(idCompany:number, idReward : number, reward: Reward){
     return this.service.put(this.url + 'companies/' + idCompany + '/rewards/' + idReward, reward);
   }
+
+  postImage(formData: FormData){
+    return this.service.post(this.url + 'companies/rewards', formData);
+  }
+
 
 
 
