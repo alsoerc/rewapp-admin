@@ -151,6 +151,7 @@ export class LoginComponent implements OnInit {
           (success) =>{
             console.log(success);
             this.cancel();
+            this.openSnackBar("Registrado con éxito");
             this.isLoading = false;
             localStorage.setItem('idCompany', success.idCompany.toString())
             localStorage.setItem('idAdmin', success.id.toString())
@@ -178,11 +179,13 @@ export class LoginComponent implements OnInit {
     this.adminService.validateCredentials(this.admin).subscribe(
       (success)=>{
         console.log(success);
-        localStorage.setItem('idCompany', success.idCompany.toString())
-        localStorage.setItem('idAdmin', success.id.toString())
+        localStorage.setItem('idCompany', success.idCompany.toString());
+        localStorage.setItem('idAdmin', success.id.toString());
+        this.openSnackBar("Bienvenido " + success.name);
       },
       (err)=>{
         console.log(err);
+        this.openSnackBar("Ocurrió un error")
       }
     )
 

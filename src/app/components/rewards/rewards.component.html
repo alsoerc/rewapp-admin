@@ -33,5 +33,49 @@
     </div>
   </mat-tab>
   <mat-tab label="Lista de recompensas">
-    hola
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="cost">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Costo (rewapps) </th>
+          <td mat-cell *matCellDef="let element"> {{element.cost}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="id2">
+          <th mat-header-cell *matHeaderCellDef> Editar registro</th>
+            <td mat-cell *matCellDef="let element">
+              <button   mat-raised-button color="primary" (click)="openSnackBar(element.id)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="id3">
+          <th mat-header-cell *matHeaderCellDef> Eliminar registro </th>
+            <td mat-cell *matCellDef="let element">
+              <button   mat-raised-button color="warn" (click)="openSnackBar(element.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+    </div>
   </mat-tab>

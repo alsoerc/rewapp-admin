@@ -1,8 +1,10 @@
+import { Reward } from './../../models/Reward';
+import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { RewardService } from './../../services/reward.service';
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBarConfig } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBarConfig, MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-rewards',
@@ -11,16 +13,31 @@ import { MatSnackBarConfig } from '@angular/material';
 })
 export class RewardsComponent implements OnInit {
 
+  //Set up mat table
+  displayedColumns: String[] = ['id', 'name', 'cost',  'id2', 'id3'];
+  dataSource: any;
+  //Set up mat paginator and mat sort
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static:false}) sort: MatSort;
+
+
   rewardForm: FormGroup;
   fileName = '';
   isLoading = false;
   file: any;
+  idCompany = Number(localStorage.getItem("idCompany"));
+  idAdmin = Number(localStorage.getItem("idAdmin"));
+
 
   constructor(private rewardService: RewardService,
     private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.generateForm();
+  }
+
+  ngAfterViewInit() {
+    this.getRewards();
   }
 
   onFileSelected(event) {
@@ -36,8 +53,7 @@ export class RewardsComponent implements OnInit {
 
     const formData = new FormData();
 
-    formData.append("id", "1");
-    formData.append("idCompany", "2");
+    formData.append("idCompany", this.idCompany.toString());
     formData.append("name", this.rewardForm.value.name);
     formData.append("imageUrl", "");
     formData.append("date", "01-11-2021");
@@ -50,6 +66,7 @@ export class RewardsComponent implements OnInit {
         this.isLoading = false;
         this.openSnackBar("Publicado con éxito")
         this.resetForm();
+        this.getRewards();
       },
       (err) => {
         console.log(err);
@@ -80,6 +97,23 @@ export class RewardsComponent implements OnInit {
 
   resetForm(){
     this.rewardForm.reset();
+  }
+
+  getRewards(){
+    this.rewardService.getRecords(this.idCompany).subscribe(
+      (success) =>{
+        this.dataSource = new MatTableDataSource<Reward>(success);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        console.log("Getting rewards...." );
+        console.log(success);
+
+
+      },
+      (err) =>{
+        console.log(err);
+      }
+    )
   }
 
 

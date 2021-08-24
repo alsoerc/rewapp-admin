@@ -16,12 +16,12 @@ export class RewardService {
   }
 
   getRecords(idCompany : number){
-    return this.service.get<Reward[]>(this.url + 'companies/' + idCompany);
+    return this.service.get<Reward[]>(this.url + 'companies/' + idCompany + '/rewards');
   }
 
-  postRecord(reward : Reward, idCompany : number){
+  /*postRecord(reward : Reward, idCompany : number){
     return this.service.post<Reward>(this.url + 'companies/' + idCompany +'/rewards' , reward);
-  }
+  }*/
 
   getOneRecord(idCompany : number, idReward:  number){
     return this.service.get<Reward>(this.url + 'companies/' + idCompany + '/rewards/' + idReward);
